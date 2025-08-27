@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Letter</title>
+  <style>
+    body {
+      background-color: #f5f0e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Georgia', serif;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #5a4634;
+    }
+    .envelope {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      background: #d8bca8;
+      border-radius: 6px;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.8s ease, width 1s ease, height 1s ease;
+    }
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #c7a891;
+      transform-origin: top;
+      transition: transform 1s ease;
+      clip-path: polygon(0 0, 50% 50%, 100% 0);
+    }
+    .letter {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      padding: 40px;
+      box-sizing: border-box;
+      line-height: 1.8;
+      font-size: 18px;
+      overflow-y: auto;
+      transform: scale(0.2);
+      opacity: 0;
+      transition: top 1s ease, transform 1s ease, opacity 1s ease;
+    }
+    .letter p {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .envelope.open {
+      width: 100vw;
+      height: 100vh;
+    }
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+    .envelope.open .letter {
+      top: 0;
+      transform: scale(1);
+      opacity: 1;
+    }
+    .envelope.open .letter p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      background: #5a4634;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #3d2f22;
+    }
+  </style>
+</head>
+<body>
+  <h1>A Letter for You</h1>
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="letter" id="letter">
+      <p>My heart feels lighter now. After such a long time apart, I don’t miss you so painfully like in the beginning anymore. I gotta admit, it hasn’t been that easy, but I’m really glad you replied to me, not avoiding like I once did.</p>
+      <p>Thank you for replying, you honestly saved my feelings that day. Sounds kinda extra but I truly felt a bit better after breaking down from the long-term mental abuse I got from people close to me.</p>
+      <p>I wanna say I don’t hate you. I actually care about you a lot. It’s been a while since I had feelings like this. When I’m in love, even replying to others outside of you feels like laziness. Please don’t think I never respected you — I respected you way too much. You’ve always been important, to the point I knew how much you could break my fragile heart. You were never just “someone” to me, you were everything once.</p>
+      <p>I wanna comfort you a bit, even if I don’t know if you need it now. My thoughts keep running wild so I just drop down what I can. I hope you understand. Please know you deserve so much love. I hope you open up more, with me or with whoever comes after. I hope you smile freely, and even when you’re sad, don’t bottle it up all alone. Share it, so people who love you can hug you and really get you. Don’t push yourself too hard. Once you start healing, life will turn softer to you.</p>
+      <p>I used to love you so much that I didn’t dare to hope for us. My walls were too thick, I couldn’t give you my all. But I know I loved, and I loved the right one. Thanks to you, now I’ll only dare to love slowly, not too fast and careless again.</p>
+      <p>I’m thankful you didn’t blame me. If I could go back, I’d still choose to walk with you at the start. I just regret things are unfinished, but I accept it. We’re better as friends, safe and easy, though a part of me still wants closeness with you.</p>
+      <p>You might say I’m pathetic, but even though we weren’t forever, I dreamt of you, and waking up felt empty. I prayed for you, cried for you, and remembered you. I just want you to know, you deserve love. Someone out there will love you more, heal you more, and ease your tired heart. They’ll stay with you, whether we’re friends or strangers later. I still pray both of us will be happy in the future.</p>
+      <p>Sorry for overthinking too much, sorry if my actions ever made you feel unsafe. My heart beat crazy when I was near you, and I treasure everything you gave me. I’ll try to be better, cuz you were truly a blessing in my life. Let’s just let things flow naturally now.</p>
+      <p>Thanks for showing up in my boring life.</p>
+    </div>
+  </div>
+  <button id="toggleButton">Open/Close Letter</button>
+  <script>
+    const envelope = document.getElementById('envelope');
+    const button = document.getElementById('toggleButton');
+    const paragraphs = document.querySelectorAll('.letter p');
+
+    button.addEventListener('click', () => {
+      envelope.classList.toggle('open');
+      if (envelope.classList.contains('open')) {
+        paragraphs.forEach((p, i) => {
+          p.style.transitionDelay = `${i * 0.6}s`;
+        });
+      } else {
+        paragraphs.forEach((p) => {
+          p.style.transitionDelay = `0s`;
+        });
+      }
+    });
+  </script>
+</body>
+</html>
