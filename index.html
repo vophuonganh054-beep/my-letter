@@ -1,26 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Letter</title>
+  <title>My Letter</title>
   <style>
     body {
       background-color: #f5f0e6;
-      font-family: 'Georgia', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      font-family: 'Georgia', serif;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #5a4634;
     }
     .envelope {
       position: relative;
       width: 300px;
       height: 200px;
-      background: #d8c3a5;
+      background: #d8bca8;
+      border-radius: 6px;
       cursor: pointer;
-      perspective: 1000px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.8s ease, width 1s ease, height 1s ease;
     }
     .flap {
       position: absolute;
@@ -28,47 +39,98 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #eae7dc;
+      background: #c7a891;
       transform-origin: top;
       transition: transform 1s ease;
-      z-index: 2;
+      clip-path: polygon(0 0, 50% 50%, 100% 0);
     }
     .letter {
       position: absolute;
-      top: 0;
+      top: 100%;
       left: 0;
       width: 100%;
       height: 100%;
       background: #fff;
-      padding: 20px;
+      padding: 40px;
       box-sizing: border-box;
-      transform: translateY(100%);
-      transition: transform 1s ease;
+      line-height: 1.8;
+      font-size: 18px;
       overflow-y: auto;
-      z-index: 1;
+      transform: scale(0.2);
+      opacity: 0;
+      transition: top 1s ease, transform 1s ease, opacity 1s ease;
+    }
+    .letter p {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .envelope.open {
+      width: 100vw;
+      height: 100vh;
     }
     .envelope.open .flap {
-      transform: rotateX(-180deg);
+      transform: rotateX(180deg);
     }
     .envelope.open .letter {
+      top: 0;
+      transform: scale(1);
+      opacity: 1;
+    }
+    .envelope.open .letter p {
+      opacity: 1;
       transform: translateY(0);
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      background: #5a4634;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #3d2f22;
     }
   </style>
 </head>
 <body>
-  <div class="envelope" onclick="this.classList.add('open')">
+  <h1>A Letter for You</h1>
+  <div class="envelope" id="envelope">
     <div class="flap"></div>
-    <div class="letter">
-      <p>My heart feels a bit lighter now. After such a long time apart, I don’t miss you in that aching way anymore. Honestly, it wasn’t easy, but I’m truly glad you replied to me—not avoiding like I once did.</p>
-      <p>Thank you for replying, you really saved my feelings that day. It might sound a bit dramatic, but after breaking down from long-term emotional hurt from people closest to me, your reply meant so much.</p>
-      <p>I want you to know—I don’t hate you. I still care about you a lot. It’s been so long since I felt this way about someone. When I truly love, even replying to others feels lazy compared to replying to you. Please don’t think I never respected you. I respected you too much. You mattered so much to me, I knew how much power you had to hurt my fragile heart. You were never “just someone.” You were everything once.</p>
-      <p>I also wanna comfort you, even if I don’t know if you need it right now. My thoughts keep running non-stop, so I just write whatever I can catch, hoping you get it. Please remember—you deserve so much love. I hope you open up more, to me or to the person who’ll love you next. I hope you always smile freely when you want to. And when you’re sad, please don’t carry all the pain alone. Speak it out so the people who love you can listen, hug you, and understand you more. Don’t always pressure yourself to keep trying so hard. Once you’re okay again, life will get gentler for you.</p>
-      <p>I once loved you so much that I didn’t dare hope too much for “us.” My walls were too thick, they stopped me from giving you everything. But I know—I did love, and I loved the right person. Thank you. After this, I’ll only dare to learn to love slowly, not letting things rush in too fast and leave too easily.</p>
-      <p>Thank you for not blaming me. If I had the chance to go back to when we started, I’d still choose to walk with you in that time. I only regret that things are unfinished, but I accept it. I know we’re better as friends, safe and lighthearted, even though I still wish I could be close to you a little more.</p>
-      <p>You might call me pathetic, but even though we weren’t together for long, I dreamed of you. And when I woke, I felt so empty. I prayed for you. I cried for you. I remembered you. I just want you to know—you deserve love. There will be people who love you even more, who bring healing and peace, who make your heart less tired. They’ll be the ones by your side. No matter what we become later—friends or strangers—I still pray for both of us to be happy.</p>
-      <p>I’m sorry for overthinking so much. I’m sorry if the way I treated you made you feel unsafe. My heart once beat so wildly near you, and I treasure everything you gave me. I’ll try to become better, because you were once a blessing I was lucky to receive. So let’s just let things flow naturally.</p>
-      <p>Thank you for appearing in my boring life.</p>
+    <div class="letter" id="letter">
+      <p>My heart feels lighter now. After such a long time apart, I don’t miss you so painfully like in the beginning anymore. I gotta admit, it hasn’t been that easy, but I’m really glad you replied to me, not avoiding like I once did.</p>
+      <p>Thank you for replying, you honestly saved my feelings that day. Sounds kinda extra but I truly felt a bit better after breaking down from the long-term mental abuse I got from people close to me.</p>
+      <p>I wanna say I don’t hate you. I actually care about you a lot. It’s been a while since I had feelings like this. When I’m in love, even replying to others outside of you feels like laziness. Please don’t think I never respected you — I respected you way too much. You’ve always been important, to the point I knew how much you could break my fragile heart. You were never just “someone” to me, you were everything once.</p>
+      <p>I wanna comfort you a bit, even if I don’t know if you need it now. My thoughts keep running wild so I just drop down what I can. I hope you understand. Please know you deserve so much love. I hope you open up more, with me or with whoever comes after. I hope you smile freely, and even when you’re sad, don’t bottle it up all alone. Share it, so people who love you can hug you and really get you. Don’t push yourself too hard. Once you start healing, life will turn softer to you.</p>
+      <p>I used to love you so much that I didn’t dare to hope for us. My walls were too thick, I couldn’t give you my all. But I know I loved, and I loved the right one. Thanks to you, now I’ll only dare to love slowly, not too fast and careless again.</p>
+      <p>I’m thankful you didn’t blame me. If I could go back, I’d still choose to walk with you at the start. I just regret things are unfinished, but I accept it. We’re better as friends, safe and easy, though a part of me still wants closeness with you.</p>
+      <p>You might say I’m pathetic, but even though we weren’t forever, I dreamt of you, and waking up felt empty. I prayed for you, cried for you, and remembered you. I just want you to know, you deserve love. Someone out there will love you more, heal you more, and ease your tired heart. They’ll stay with you, whether we’re friends or strangers later. I still pray both of us will be happy in the future.</p>
+      <p>Sorry for overthinking too much, sorry if my actions ever made you feel unsafe. My heart beat crazy when I was near you, and I treasure everything you gave me. I’ll try to be better, cuz you were truly a blessing in my life. Let’s just let things flow naturally now.</p>
+      <p>Thanks for showing up in my boring life.</p>
     </div>
   </div>
+  <button id="toggleButton">Open/Close Letter</button>
+  <script>
+    const envelope = document.getElementById('envelope');
+    const button = document.getElementById('toggleButton');
+    const paragraphs = document.querySelectorAll('.letter p');
+
+    button.addEventListener('click', () => {
+      envelope.classList.toggle('open');
+      if (envelope.classList.contains('open')) {
+        paragraphs.forEach((p, i) => {
+          p.style.transitionDelay = `${i * 0.6}s`;
+        });
+      } else {
+        paragraphs.forEach((p) => {
+          p.style.transitionDelay = `0s`;
+        });
+      }
+    });
+  </script>
 </body>
 </html>
